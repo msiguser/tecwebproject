@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Proyecto Tecnologias Web{% endblock %}</title>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- bootstrap CSS -->
+	<link href="{% static "bootstrap/dist/css/bootstrap.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "css/Site.css" %}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Toma de decisiones</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'index' %}">Inicio</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="#">{{ user.get_username }}</a></li>
+                    <li><a href="{% url 'logout'%}?next={{request.path}}">Cerrar sesión</a></li>
+                {% else %}
+                    <li><a href="{% url 'login'%}?next={% url 'dashboard-init' %}">Iniciar sesión</a></li>
+                {% endif %}
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid body-content">
+        {% block content %}{% endblock %}
+
+        <hr />
+
+        <footer>
+            <p>&copy; 2018 - Grupo 7</p>
+        </footer>
+
+    </div>
+
+    <!-- jquery -->
+    <script src="{% static "jquery/dist/jquery.js" %}"></script>
+    <!-- bootstrap -->
+    <script src="{% static "bootstrap/dist/js/bootstrap.js" %}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
